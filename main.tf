@@ -7,7 +7,7 @@ resource "azurerm_virtual_network" "VNET-Connectivity" {
   tags                = merge(var.tags, {})
   resource_group_name = azurerm_resource_group.ConnectivityRG.name
   name                = "VNET-Connectivity"
-  location            = "Central US"
+  location            = var.location
 
   address_space = [
     var.addresssapce,
@@ -40,7 +40,7 @@ resource "azurerm_firewall" "Connectivity-FW" {
   tags                = merge(var.tags, {})
   resource_group_name = azurerm_resource_group.ConnectivityRG.name
   name                = "ConnectivityFW"
-  location            = "Central US"
+  location            = var.location
 }
 
 resource "azurerm_subnet" "Connectivity-CDN-Snet" {
@@ -62,26 +62,27 @@ resource "azurerm_firewall_policy" "Frontdoor-GW-WAF" {
   tags                = merge(var.tags, {})
   resource_group_name = azurerm_resource_group.ConnectivityRG.name
   name                = "FrontdoorGWWAF"
-  location            = "Central US"
+  location            = var.location
 }
 
 resource "azurerm_vpn_gateway" "VPN-GW" {
   tags                = merge(var.tags, {})
   resource_group_name = azurerm_resource_group.ConnectivityRG.name
   name                = "VPNGW"
-  location            = "Central US"
+  location            = var.location
 }
 
 resource "azurerm_application_gateway" "App-GW" {
   tags                = merge(var.tags, {})
   resource_group_name = azurerm_resource_group.ConnectivityRG.name
   name                = "App-GW"
-  location            = "Central US"
+  location            = var.location
 }
 
 resource "azurerm_api_management" "api_management_16" {
   tags                = merge(var.tags, {})
   resource_group_name = azurerm_resource_group.ConnectivityRG.name
+  location            = var.location
 }
 
 resource "azurerm_key_vault" "Connectivity_KVault" {
@@ -194,6 +195,7 @@ resource "azurerm_private_endpoint" "private_endpoint_33" {
 resource "azurerm_sql_database" "sql_database_34" {
   tags                = merge(var.tags, {})
   resource_group_name = azurerm_resource_group.App-RG.name
+  location            = "Central US"
 }
 
 resource "azurerm_redis_cache" "redis_cache_35" {
@@ -230,5 +232,108 @@ resource "azurerm_data_factory" "data_factory_41" {
 
 resource "azurerm_eventhub" "eventhub_42" {
   resource_group_name = azurerm_resource_group.App-RG.name
+}
+
+resource "azurerm_private_endpoint" "private_endpoint_43" {
+  tags                = merge(var.tags, {})
+  subnet_id           = azurerm_subnet.Backend-Snet.id
+  resource_group_name = azurerm_resource_group.App-RG.name
+}
+
+resource "azurerm_private_endpoint" "private_endpoint_44" {
+  tags                = merge(var.tags, {})
+  subnet_id           = azurerm_subnet.Backend-Snet.id
+  resource_group_name = azurerm_resource_group.App-RG.name
+}
+
+resource "azurerm_private_endpoint" "private_endpoint_45" {
+  tags                = merge(var.tags, {})
+  subnet_id           = azurerm_subnet.Backend-Snet.id
+  resource_group_name = azurerm_resource_group.App-RG.name
+}
+
+resource "azurerm_synapse_private_link_hub" "synapse_private_link_hub_46" {
+  tags                = merge(var.tags, {})
+  resource_group_name = azurerm_resource_group.App-RG.name
+}
+
+resource "azurerm_private_endpoint" "private_endpoint_47" {
+  tags                = merge(var.tags, {})
+  subnet_id           = azurerm_subnet.Backend-Snet.id
+  resource_group_name = azurerm_resource_group.App-RG.name
+}
+
+resource "azurerm_private_endpoint" "private_endpoint_48" {
+  tags                = merge(var.tags, {})
+  subnet_id           = azurerm_subnet.Backend-Snet.id
+  resource_group_name = azurerm_resource_group.App-RG.name
+}
+
+resource "azurerm_private_endpoint" "private_endpoint_49" {
+  tags                = merge(var.tags, {})
+  subnet_id           = azurerm_subnet.Backend-Snet.id
+  resource_group_name = azurerm_resource_group.App-RG.name
+}
+
+resource "azurerm_private_endpoint" "private_endpoint_50" {
+  tags                = merge(var.tags, {})
+  subnet_id           = azurerm_subnet.Backend-Snet.id
+  resource_group_name = azurerm_resource_group.App-RG.name
+}
+
+resource "azurerm_synapse_workspace" "synapse_workspace_51" {
+  tags                = merge(var.tags, {})
+  resource_group_name = azurerm_resource_group.App-RG.name
+}
+
+resource "azurerm_subnet" "subnet_52" {
+}
+
+resource "azurerm_virtual_network" "virtual_network_53" {
+  tags = merge(var.tags, {})
+}
+
+resource "azurerm_subnet" "subnet_54" {
+  virtual_network_name = azurerm_virtual_network.virtual_network_53.name
+}
+
+resource "azurerm_subnet" "subnet_55" {
+  virtual_network_name = azurerm_virtual_network.virtual_network_53.name
+}
+
+resource "azurerm_subnet" "subnet_56" {
+  virtual_network_name = azurerm_virtual_network.virtual_network_53.name
+}
+
+resource "azurerm_private_endpoint" "private_endpoint_57" {
+  tags      = merge(var.tags, {})
+  subnet_id = azurerm_subnet.subnet_52.id
+}
+
+resource "azurerm_private_endpoint" "private_endpoint_58" {
+  tags      = merge(var.tags, {})
+  subnet_id = azurerm_subnet.subnet_52.id
+}
+
+resource "azurerm_private_endpoint" "private_endpoint_59" {
+  tags      = merge(var.tags, {})
+  subnet_id = azurerm_subnet.subnet_52.id
+}
+
+resource "azurerm_private_endpoint" "private_endpoint_60" {
+  tags      = merge(var.tags, {})
+  subnet_id = azurerm_subnet.subnet_52.id
+}
+
+resource "azurerm_network_security_group" "network_security_group_61" {
+  tags = merge(var.tags, {})
+}
+
+resource "azurerm_network_security_group" "network_security_group_62" {
+  tags = merge(var.tags, {})
+}
+
+resource "azurerm_network_security_group" "network_security_group_63" {
+  tags = merge(var.tags, {})
 }
 
